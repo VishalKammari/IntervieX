@@ -86,10 +86,6 @@ const getMockEvaluation = (jobTitle, questions) => {
     questionEvaluations: evaluations
   };
 };
-
-/**
- * Generates 5-6 questions using Gemini API or mock data
- */
 const generateQuestions = async (jobTitle, jobDescription, yearsOfExperience, skills, resumeText) => {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -99,7 +95,7 @@ const generateQuestions = async (jobTitle, jobDescription, yearsOfExperience, sk
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-3.5-flash' });
 
     const prompt = `You are an expert technical interviewer.
 Generate exactly 5 to 6 questions for a candidate based on:
@@ -133,10 +129,6 @@ Ensure the output is valid JSON and nothing else.`;
     return getMockQuestions(jobTitle);
   }
 };
-
-/**
- * Evaluates candidate responses using Gemini API or mock data
- */
 const evaluateInterview = async (jobTitle, jobDescription, yearsOfExperience, questions, resumeText) => {
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
@@ -199,7 +191,6 @@ Return ONLY a JSON object with the following structure:
 Ensure the output is valid JSON and nothing else.`;
 
     console.log('--- SENDING EVALUATION PROMPT TO GEMINI ---');
-    console.log(prompt);
     console.log('-------------------------------------------');
 
     const result = await model.generateContent({
