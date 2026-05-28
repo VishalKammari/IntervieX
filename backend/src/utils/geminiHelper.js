@@ -138,7 +138,7 @@ const evaluateInterview = async (jobTitle, jobDescription, yearsOfExperience, qu
 
   try {
     const genAI = new GoogleGenerativeAI(apiKey);
-    const model = genAI.getGenerativeModel({ model: 'gemini-1.5-flash' });
+    const model = genAI.getGenerativeModel({ model: 'gemini-3.5-flash' });
 
     const qaList = questions.map((q, idx) => `
 Question ID: ${q._id ? q._id.toString() : idx}
