@@ -14,22 +14,21 @@ import ResumeManager from './pages/ResumeManager';
 import SetupInterview from './pages/SetupInterview';
 import InterviewSession from './pages/InterviewSession';
 import InterviewReport from './pages/InterviewReport';
+import About from './pages/About';
 
 function App() {
   return (
     <ThemeProvider>
       <AuthProvider>
         <Router>
-          <div className="flex flex-col min-h-screen bg-gray-50 text-gray-900 dark:bg-darkBg dark:text-gray-100 transition-colors duration-200">
+          <div className="flex flex-col min-h-screen bg-black text-gray-900 dark:text-gray-100 transition-colors duration-200">
             <Navbar />
             <main className="flex-grow">
               <Routes>
-                {/* Public Routes */}
                 <Route path="/" element={<Landing />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/register" element={<Register />} />
 
-                {/* Protected Routes */}
                 <Route
                   path="/dashboard"
                   element={
@@ -70,8 +69,13 @@ function App() {
                     </ProtectedRoute>
                   }
                 />
+                <Route 
+                path="/about"
+                element={
+                  <About />
+                }
+                />
 
-                {/* Fallback redirect */}
                 <Route path="*" element={<Navigate to="/" replace />} />
               </Routes>
             </main>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import api from '../utils/api';
-import AudioVisualizer from '../components/AudioVisualizer';
 import { Mic, Square, Volume2, ArrowRight, Play, CheckCircle, RotateCcw, AlertTriangle, HelpCircle } from 'lucide-react';
 
 const InterviewSession = () => {
@@ -11,18 +10,12 @@ const InterviewSession = () => {
   const [interview, setInterview] = useState(null);
   const [loading, setLoading] = useState(true);
   const [currentIdx, setCurrentIdx] = useState(0);
-
-  // Voice/Audio States
   const [isSpeaking, setIsSpeaking] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [isTranscribing, setIsTranscribing] = useState(false);
   const [stream, setStream] = useState(null);
   const [userAnswerText, setUserAnswerText] = useState('');
-  
-  // Timer State
   const [timeLeft, setTimeLeft] = useState(120); // 2 minutes per question
-  
-  // Finalizing Evaluation state
   const [evaluating, setEvaluating] = useState(false);
 
   const mediaRecorderRef = useRef(null);
@@ -31,18 +24,16 @@ const InterviewSession = () => {
   const speechUtteranceRef = useRef(null);
   const audioPlayerRef = useRef(null);
 
-  // Fetch Interview details on load
+ 
   const fetchInterview = async () => {
     try {
       const res = await api.get(`/api/interviews/${id}`);
       setInterview(res.data.data);
       
-      // Find where the user left off (first question with empty answer)
       const firstUnanswered = res.data.data.questions.findIndex((q) => !q.userAnswer);
       if (firstUnanswered !== -1) {
         setCurrentIdx(firstUnanswered);
       } else {
-        // If all are answered, go to the last one or report
         if (res.data.data.status === 'completed') {
           navigate(`/report/${id}`);
         } else {
@@ -66,7 +57,6 @@ const InterviewSession = () => {
     };
   }, [id]);
 
-  // Handle TTS and timer reset when question index changes
   useEffect(() => {
     if (!interview || !interview.questions[currentIdx]) return;
     
@@ -75,7 +65,6 @@ const InterviewSession = () => {
     stopSpeaking();
     stopRecordingOnly();
 
-    // Reset and start countdown timer
     clearInterval(timerRef.current);
     timerRef.current = setInterval(() => {
       setTimeLeft((prev) => {
@@ -87,7 +76,6 @@ const InterviewSession = () => {
       });
     }, 1000);
 
-    // Speak the question automatically after a short delay
     const t = setTimeout(() => {
       speakQuestion(interview.questions[currentIdx].text);
     }, 800);
@@ -98,13 +86,12 @@ const InterviewSession = () => {
     };
   }, [currentIdx, interview]);
 
-  // Web Speech API / Sarvam TTS integration
   const speakQuestion = async (text) => {
     stopSpeaking();
     setIsSpeaking(true);
 
     try {
-      // Try backend Sarvam TTS
+  
       const res = await api.post('/api/audio/tts', { text });
       
       if (res.data.success && res.data.audio) {
@@ -118,7 +105,6 @@ const InterviewSession = () => {
         };
         await audioPlayerRef.current.play();
       } else {
-        // Fallback to browser SpeechSynthesis
         fallbackSpeechSynthesis(text);
       }
     } catch (err) {
@@ -158,7 +144,6 @@ const InterviewSession = () => {
     setIsSpeaking(false);
   };
 
-  // Recording integration
   const startRecording = async () => {
     stopSpeaking();
     audioChunksRef.current = [];
@@ -252,21 +237,17 @@ const InterviewSession = () => {
     try {
       const questionId = interview.questions[currentIdx]._id;
       
-      // Save current answer to backend
       const res = await api.put(`/api/interviews/${id}/answer`, {
         questionId,
         userAnswer: userAnswerText,
       });
 
-      // Update local state
       const updatedInterview = res.data.data;
       setInterview(updatedInterview);
 
-      // Advance to next question or complete
       if (currentIdx < updatedInterview.questions.length - 1) {
         setCurrentIdx(currentIdx + 1);
       } else {
-        // Trigger report evaluation
         handleFinishInterview();
       }
     } catch (err) {
@@ -332,7 +313,6 @@ const InterviewSession = () => {
   const activeQuestion = interview.questions[currentIdx];
   const isLastQuestion = currentIdx === interview.questions.length - 1;
 
-  // Format time display
   const formatTime = (secs) => {
     const m = Math.floor(secs / 60);
     const s = secs % 60;
@@ -340,122 +320,132 @@ const InterviewSession = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto px-4 py-8 relative">
-      {/* Background blur */}
-      <div className="absolute top-[-10%] right-[-10%] w-[35%] h-[35%] rounded-full bg-indigo-500/5 blur-[120px] pointer-events-none"></div>
+    <div className="min-h-screen bg-black text-white px-4 py-8 relative overflow-hidden">
+    <div className="absolute top-[-10%] right-[-10%] w-72 h-72 bg-indigo-600/20 blur-3xl rounded-full"></div>
+    <div className="absolute bottom-[-10%] left-[-10%] w-72 h-72 bg-purple-600/20 blur-3xl rounded-full"></div>
 
-      {/* Progress Header */}
+    <div className="max-w-4xl mx-auto relative z-10">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
-          <span className="text-xs font-bold text-indigo-600 dark:text-indigo-400 uppercase tracking-widest">
+          <span className="text-xs font-bold text-zinc-500 uppercase tracking-widest">
             {interview.jobTitle}
           </span>
-          <h2 className="text-2xl font-bold font-display mt-0.5">Live Mock Interview</h2>
+
+          <h2 className="text-3xl font-bold mt-1">
+            Live Mock Interview
+          </h2>
         </div>
 
-        {/* Counter progress */}
         <div className="flex items-center space-x-3 shrink-0">
-          <span className="text-xs text-gray-500 dark:text-gray-400">
-            Question {currentIdx + 1} of {interview.questions.length}
+          <span className="text-xs text-zinc-400">
+            Question {currentIdx + 1} of{' '}
+            {interview.questions.length}
           </span>
-          <div className="w-24 h-2 bg-gray-200 dark:bg-gray-800 rounded-full overflow-hidden">
+
+          <div className="w-24 h-2 bg-zinc-800 rounded-full overflow-hidden">
             <div
-              className="h-full bg-indigo-500 transition-all duration-300"
-              style={{ width: `${((currentIdx + 1) / interview.questions.length) * 100}%` }}
+              className="h-full bg-white transition-all duration-300"
+              style={{
+                width: `${
+                  ((currentIdx + 1) /
+                    interview.questions.length) *
+                  100
+                }%`,
+              }}
             ></div>
           </div>
         </div>
       </div>
-
-      {/* Active Question Box */}
-      <div className="p-6 sm:p-8 rounded-2xl bg-white border border-gray-100 dark:bg-darkCard dark:border-gray-800/60 shadow-sm mb-6">
+      <div className="p-6 sm:p-8 rounded-3xl bg-[#0a0a0a] border border-zinc-800 mb-6">
         <div className="flex justify-between items-start gap-4">
-          <div className="inline-flex px-2.5 py-1 rounded-lg bg-indigo-50 text-indigo-600 dark:bg-indigo-950/30 dark:text-indigo-400 text-xs font-bold shrink-0">
+          <div className="inline-flex px-3 py-1 rounded-lg bg-zinc-900 text-zinc-300 text-xs font-semibold shrink-0">
             {activeQuestion.type} Question
           </div>
-
-          {/* Question countdown */}
-          <div className={`flex items-center space-x-1.5 px-3 py-1 rounded-lg text-xs font-mono font-bold ${timeLeft <= 20 ? 'bg-red-50 text-red-600 dark:bg-red-950/20 dark:text-red-400 animate-pulse' : 'bg-gray-50 text-gray-500 dark:bg-gray-900 dark:text-gray-400'}`}>
-            <span>Time Remaining:</span>
+          <div
+            className={`flex items-center space-x-1.5 px-3 py-1 rounded-lg text-xs font-mono font-bold ${
+              timeLeft <= 20
+                ? 'bg-red-950/30 text-red-400 animate-pulse'
+                : 'bg-zinc-900 text-zinc-400'
+            }`}
+          >
+            <span>Time:</span>
             <span>{formatTime(timeLeft)}</span>
           </div>
         </div>
-
-        {/* Question text */}
         <div className="mt-6 flex gap-4 items-start">
-          <div className="w-10 h-10 rounded-full bg-indigo-500/10 dark:bg-indigo-500/5 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0">
+          <div className="w-10 h-10 rounded-full bg-zinc-900 flex items-center justify-center text-white shrink-0">
             <HelpCircle className="w-5 h-5" />
           </div>
-          <h3 className="text-lg sm:text-xl font-bold leading-normal text-gray-800 dark:text-gray-100">
+
+          <h3 className="text-xl font-semibold leading-relaxed text-white">
             {activeQuestion.text}
           </h3>
         </div>
 
-        {/* Audio controls */}
-        <div className="mt-6 pt-6 border-t border-gray-100 dark:border-gray-800/60 flex items-center gap-3">
+        {/* Audio Controls */}
+        <div className="mt-6 pt-6 border-t border-zinc-800 flex items-center gap-3">
           <button
-            onClick={() => speakQuestion(activeQuestion.text)}
+            onClick={() =>
+              speakQuestion(activeQuestion.text)
+            }
             disabled={isSpeaking || isRecording}
-            className="flex items-center space-x-1 px-4 py-2 bg-gray-50 hover:bg-gray-100 dark:bg-gray-900 dark:hover:bg-gray-800 text-gray-700 dark:text-gray-300 font-semibold text-xs rounded-xl transition-colors disabled:opacity-50"
+            className="flex items-center space-x-2 px-4 py-2 bg-zinc-900 hover:bg-zinc-800 text-white font-medium text-sm rounded-xl transition disabled:opacity-50"
           >
             <Volume2 className="w-4 h-4" />
             <span>Speak Question</span>
           </button>
+
           {isSpeaking && (
             <button
               onClick={stopSpeaking}
-              className="text-xs text-red-600 hover:underline dark:text-red-400"
+              className="text-sm text-red-400 hover:underline"
             >
               Stop Audio
             </button>
           )}
         </div>
       </div>
-
-      {/* Voice & Transcript section */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        {/* Audio Voice Input Panel */}
-        <div className="p-6 rounded-2xl bg-white border border-gray-100 dark:bg-darkCard dark:border-gray-800/60 shadow-sm flex flex-col items-center justify-center min-h-[220px]">
-          <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-6">Voice Control</h4>
-          
-          {/* Waveform Visualizer */}
-          <div className="w-full mb-6">
-            <AudioVisualizer isRecording={isRecording} isSpeaking={isSpeaking} stream={stream} />
-          </div>
+        <div className="p-6 rounded-3xl bg-[#0a0a0a] border border-zinc-800 flex flex-col items-center justify-center min-h-[220px]">
+          <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-widest mb-6">
+            Voice Control
+          </h4>
 
-          {/* Action button */}
           {!isRecording ? (
             <button
               onClick={startRecording}
               disabled={isTranscribing}
-              className="w-16 h-16 rounded-full bg-indigo-600 hover:bg-indigo-700 text-white flex items-center justify-center shadow-lg shadow-indigo-500/20 transition-transform active:scale-95 focus:outline-none focus:ring-4 focus:ring-indigo-500/20 disabled:opacity-50"
-              title="Start Recording"
+              className="w-16 h-16 rounded-full bg-white hover:bg-zinc-200 text-black flex items-center justify-center transition active:scale-95 disabled:opacity-50"
             >
               <Mic className="w-6 h-6" />
             </button>
           ) : (
             <button
               onClick={stopRecording}
-              className="w-16 h-16 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center shadow-lg shadow-red-500/20 transition-transform active:scale-95 animate-pulse focus:outline-none"
-              title="Stop Recording"
+              className="w-16 h-16 rounded-full bg-red-600 hover:bg-red-700 text-white flex items-center justify-center transition active:scale-95 animate-pulse"
             >
               <Square className="w-6 h-6" />
             </button>
           )}
-          
-          <p className="text-xs text-gray-400 mt-4 text-center">
-            {isRecording ? 'Recording microphone...' : isTranscribing ? 'Transcribing text...' : 'Click mic to reply via speech'}
+
+          <p className="text-xs text-zinc-500 mt-4 text-center">
+            {isRecording
+              ? 'Recording microphone...'
+              : isTranscribing
+              ? 'Transcribing speech...'
+              : 'Click mic to answer'}
           </p>
         </div>
-
-        {/* Written response box */}
-        <div className="md:col-span-2 p-6 rounded-2xl bg-white border border-gray-100 dark:bg-darkCard dark:border-gray-800/60 shadow-sm flex flex-col">
+        <div className="md:col-span-2 p-6 rounded-3xl bg-[#0a0a0a] border border-zinc-800 flex flex-col">
           <div className="flex justify-between items-center mb-3">
-            <h4 className="text-xs font-semibold text-gray-400 uppercase tracking-widest">Your Transcript Answer</h4>
+            <h4 className="text-xs font-semibold text-zinc-500 uppercase tracking-widest">
+              Your Answer
+            </h4>
+
             {userAnswerText && (
               <button
                 onClick={() => setUserAnswerText('')}
-                className="text-[10px] text-gray-400 hover:text-red-500 flex items-center space-x-0.5"
+                className="text-xs text-zinc-500 hover:text-red-400 flex items-center space-x-1"
               >
                 <RotateCcw className="w-3 h-3" />
                 <span>Reset</span>
@@ -465,40 +455,47 @@ const InterviewSession = () => {
 
           <textarea
             value={userAnswerText}
-            onChange={(e) => setUserAnswerText(e.target.value)}
-            placeholder="Your spoken transcript will stream here, or you can manually type/edit your response..."
-            className="w-full flex-1 min-h-[140px] px-4 py-3 rounded-xl border bg-gray-50 dark:bg-gray-900 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:bg-white dark:focus:bg-darkBg transition-all text-sm border-gray-200 dark:border-gray-800 leading-relaxed resize-none"
+            onChange={(e) =>
+              setUserAnswerText(e.target.value)
+            }
+            placeholder="Your answer will appear here..."
+            className="w-full flex-1 min-h-[140px] px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm leading-relaxed resize-none"
             disabled={isTranscribing}
           />
-          
+
           {isTranscribing && (
-            <div className="flex items-center space-x-2 text-xs text-gray-500 mt-2">
-              <div className="w-3 h-3 border-2 border-indigo-500 border-t-transparent rounded-full animate-spin"></div>
-              <span>Processing microphone upload...</span>
+            <div className="flex items-center space-x-2 text-xs text-zinc-400 mt-3">
+              <div className="w-3 h-3 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
+
+              <span>Processing speech...</span>
             </div>
           )}
         </div>
       </div>
-
-      {/* Navigation Buttons */}
       <div className="flex justify-between items-center">
         <button
           onClick={handlePreviousQuestion}
           disabled={currentIdx === 0}
-          className="px-5 py-3 rounded-xl border border-gray-200 bg-white/50 text-gray-700 dark:border-gray-800 dark:bg-darkCard/50 dark:text-gray-300 font-medium hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors disabled:opacity-30 disabled:pointer-events-none"
+          className="px-5 py-3 rounded-xl border border-zinc-800 bg-[#0a0a0a] text-white font-medium hover:bg-zinc-900 transition disabled:opacity-30 disabled:pointer-events-none"
         >
           Previous Question
         </button>
 
         <button
           onClick={handleSaveAnswer}
-          className="px-6 py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold shadow-md shadow-indigo-500/10 hover:shadow-lg transition-colors flex items-center space-x-1.5"
+          className="px-6 py-3 rounded-xl bg-white text-black hover:bg-zinc-200 font-semibold transition flex items-center space-x-2"
         >
-          <span>{isLastQuestion ? 'Finish & Review' : 'Next Question'}</span>
+          <span>
+            {isLastQuestion
+              ? 'Finish & Review'
+              : 'Next Question'}
+          </span>
+
           <ArrowRight className="w-4 h-4" />
         </button>
       </div>
     </div>
+  </div>
   );
 };
 

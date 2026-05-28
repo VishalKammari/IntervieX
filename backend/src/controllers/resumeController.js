@@ -1,11 +1,6 @@
 const Resume = require('../models/Resume');
 const { parseResume } = require('../utils/resumeParser');
 
-/**
- * @desc    Upload & parse a resume
- * @route   POST /api/resumes/upload
- * @access  Private
- */
 const uploadResume = async (req, res, next) => {
   try {
     if (!req.file) {
@@ -15,10 +10,8 @@ const uploadResume = async (req, res, next) => {
 
     const { originalname, mimetype, buffer, size } = req.file;
 
-    // Parse the file buffer to get extracted text
     const extractedText = await parseResume(buffer, mimetype);
 
-    // Save to database
     const resume = await Resume.create({
       user: req.user._id,
       fileName: originalname,
@@ -34,11 +27,6 @@ const uploadResume = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get all resumes of logged-in user
- * @route   GET /api/resumes
- * @access  Private
- */
 const getResumes = async (req, res, next) => {
   try {
     const resumes = await Resume.find({ user: req.user._id }).sort({ createdAt: -1 });
@@ -53,11 +41,6 @@ const getResumes = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Delete a resume
- * @route   DELETE /api/resumes/:id
- * @access  Private
- */
 const deleteResume = async (req, res, next) => {
   try {
     const resume = await Resume.findById(req.params.id);
@@ -67,7 +50,6 @@ const deleteResume = async (req, res, next) => {
       throw new Error('Resume not found');
     }
 
-    // Check user ownership
     if (resume.user.toString() !== req.user._id.toString()) {
       res.status(401);
       throw new Error('Not authorized to delete this resume');

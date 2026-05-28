@@ -1,12 +1,6 @@
 const pdf = require('pdf-parse');
 const mammoth = require('mammoth');
 
-/**
- * Parses file buffer and extracts text content based on mime type
- * @param {Buffer} buffer - File buffer
- * @param {string} mimeType - Mimetype of the file
- * @returns {Promise<string>} Extracted text
- */
 const parseResume = async (buffer, mimeType) => {
   try {
     if (mimeType === 'application/pdf') {

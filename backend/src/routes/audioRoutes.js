@@ -5,7 +5,6 @@ const { protect } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-// Multer storage config for audio files (stored in memory as buffer)
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {

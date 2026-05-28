@@ -9,7 +9,6 @@ const { protect } = require('../middleware/authMiddleware');
 
 const router = express.Router();
 
-// Configure multer for memory uploads
 const upload = multer({
   storage: multer.memoryStorage(),
   limits: {

@@ -1,90 +1,23 @@
+@import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Instrument+Serif&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Smooch+Sans:wght@100..900&display=swap');
-/* Glassmorphism utility classes */
 .instrument-serif-regular {
-  font-family: "Instrument Serif", serif;
-  font-weight: 100;
+  font-family: "Dancing Script", serif;
+  font-weight: 400;
   font-style: normal;
 }
+
 .instrument-serif-bold {
   font-family: "Instrument Serif", serif;
-  font-weight: 700;
-  font-style: normal;
-} 
-
-.instrument{
-  font-family: "Smooch Sans";
-  font-weight: 400;
+  font-weight: 900;
   font-style: normal;
 }
 
-.instrument-serif-regular-italic {
-  font-family: "Instrument Serif", serif;
-  font-weight: 400;
-  font-style: italic;
-}
-.smooch-sans-normal {
-  font-family: "Smooch Sans", sans-serif;
+.dancing-script {
+  font-family:"Instrument Serif", serif;
   font-optical-sizing: auto;
-  font-weight: normal;
+  font-weight: 400;
   font-style: normal;
 }
-.glass {
-  background: rgba(255, 255, 255, 0.04);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.glass-light {
-  background: rgba(255, 255, 255, 0.7);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(0, 0, 0, 0.05);
-}
-
-.glass-card {
-  @apply glass hover:border-indigo-500/20 transition-all duration-300;
-}
-
-.glass-card-light {
-  @apply glass-light hover:border-indigo-500/20 transition-all duration-300;
-}
-
-/* Customized scrollbar */
-::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
-}
-
-::-webkit-scrollbar-track {
-  background: transparent;
-}
-
-::-webkit-scrollbar-thumb {
-  background: rgba(99, 102, 241, 0.2);
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: rgba(99, 102, 241, 0.4);
-}
-
-/* Wave animation for AI voice visualizer */
-@keyframes voiceWave {
-  0%, 100% {
-    transform: scaleY(0.3);
-  }
-  50% {
-    transform: scaleY(1);
-  }
-}
-
-.animate-wave-1 { animation: voiceWave 1.2s ease-in-out infinite; }
-.animate-wave-2 { animation: voiceWave 0.9s ease-in-out infinite 0.15s; }
-.animate-wave-3 { animation: voiceWave 1.4s ease-in-out infinite 0.3s; }
-.animate-wave-4 { animation: voiceWave 0.8s ease-in-out infinite 0.45s; }
-.animate-wave-5 { animation: voiceWave 1.1s ease-in-out infinite 0.6s; }

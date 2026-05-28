@@ -1,6 +1,5 @@
 const { GoogleGenerativeAI } = require('@google/generative-ai');
 
-// Helper to generate mock questions for local/offline developer flow
 const getMockQuestions = (jobTitle, difficulty) => {
   return [
     {

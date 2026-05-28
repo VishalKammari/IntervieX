@@ -2,11 +2,6 @@ const Interview = require('../models/Interview');
 const Resume = require('../models/Resume');
 const { generateQuestions, evaluateInterview } = require('../utils/geminiHelper');
 
-/**
- * @desc    Create interview & generate questions
- * @route   POST /api/interviews
- * @access  Private
- */
 const createInterview = async (req, res, next) => {
   try {
     const {
@@ -35,7 +30,6 @@ const createInterview = async (req, res, next) => {
       }
     }
 
-    // Call Gemini API to generate questions
     const generated = await generateQuestions(
       jobTitle,
       jobDescription,
@@ -44,7 +38,6 @@ const createInterview = async (req, res, next) => {
       resumeText
     );
 
-    // Format the generated questions list into schema structure
     const questions = generated.map((q) => ({
       text: q.text,
       type: q.type || 'Mixed',
@@ -54,7 +47,6 @@ const createInterview = async (req, res, next) => {
       feedback: '',
     }));
 
-    // Save Interview session to database
     const interview = await Interview.create({
       user: req.user._id,
       resume: selectedResumeId,
@@ -77,11 +69,6 @@ const createInterview = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get user interviews
- * @route   GET /api/interviews
- * @access  Private
- */
 const getInterviews = async (req, res, next) => {
   try {
     const interviews = await Interview.find({ user: req.user._id })
@@ -98,11 +85,6 @@ const getInterviews = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Get single interview details
- * @route   GET /api/interviews/:id
- * @access  Private
- */
 const getInterviewById = async (req, res, next) => {
   try {
     const interview = await Interview.findById(req.params.id).populate('resume', 'fileName');
@@ -126,11 +108,6 @@ const getInterviewById = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Save response text for a specific question
- * @route   PUT /api/interviews/:id/answer
- * @access  Private
- */
 const saveAnswer = async (req, res, next) => {
   try {
     const { questionId, userAnswer } = req.body;
@@ -172,11 +149,6 @@ const saveAnswer = async (req, res, next) => {
   }
 };
 
-/**
- * @desc    Finalize interview & request AI evaluation
- * @route   POST /api/interviews/:id/evaluate
- * @access  Private
- */
 const submitEvaluation = async (req, res, next) => {
   try {
     const interview = await Interview.findById(req.params.id);
@@ -199,7 +171,6 @@ const submitEvaluation = async (req, res, next) => {
       }
     }
 
-    // Call Gemini API to evaluate interview responses
     const evalData = await evaluateInterview(
       interview.jobTitle,
       interview.jobDescription,
@@ -208,22 +179,18 @@ const submitEvaluation = async (req, res, next) => {
       resumeText
     );
 
-    // Update evaluation scores and feedback details for each question
     if (evalData.questionEvaluations && Array.isArray(evalData.questionEvaluations)) {
       evalData.questionEvaluations.forEach((qEval, idx) => {
         let question = null;
         
-        // Match by ID if provided
         if (qEval.questionId) {
           question = interview.questions.id(qEval.questionId);
         }
         
-        // Fallback to matching by index
         if (!question && idx < interview.questions.length) {
           question = interview.questions[idx];
         }
         
-        // Fallback to text matching
         if (!question) {
           question = interview.questions.find(
             (q) => q.text.toLowerCase().trim() === qEval.questionText?.toLowerCase().trim()
@@ -240,7 +207,6 @@ const submitEvaluation = async (req, res, next) => {
       });
     }
 
-    // Update overall evaluation schema
     interview.evaluation = {
       overallScore: evalData.overallScore || 0,
       strengths: evalData.strengths || [],
