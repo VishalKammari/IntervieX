@@ -131,8 +131,7 @@ const Navbar = () => {
 
               <Link
                 to="/register"
-                className="rounded-xl bg-white px-5 py-2.5 text-sm font-medium text-black shadow-lg shadow-white
-                /20 transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+                className="rounded-xl bg-white px-5 py-2.5 text-sm font-medium text-black transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
               >
                 Get Started
               </Link>
