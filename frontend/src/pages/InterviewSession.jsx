@@ -78,7 +78,7 @@ const InterviewSession = () => {
 
     const t = setTimeout(() => {
       speakQuestion(interview.questions[currentIdx].text);
-    }, 800);
+    },0);
 
     return () => {
       clearTimeout(t);
