@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-````md
-# IntervieX
-
-### AI-Powered Mock Interview Platform
-
-IntervieX is a modern full-stack AI interview preparation platform built with the MERN stack. It simulates realistic technical interviews using AI-generated questions, real-time voice interactions, resume-based personalization, and intelligent performance evaluation.
-
----
-
-![alt text](pika-1780030819764-1x-1.png)
-=======
 # IntervieX
 
 ### AI Powered Mock Interview Platform
@@ -24,7 +12,6 @@ Click the image:
 
 ---
 
->>>>>>> e889b24a5669013b8391883753ca2657596f3d70
 # Features
 
 ## AI-Powered Interview Generation
