@@ -14,7 +14,7 @@ const createInterview = async (req, res, next) => {
       resumeId,
     } = req.body;
 
-    if (!jobTitle || !yearsOfExperience) {
+    if (!jobTitle || yearsOfExperience === undefined || yearsOfExperience === null) {
       res.status(400);
       throw new Error('Please include job title and years of experience');
     }
