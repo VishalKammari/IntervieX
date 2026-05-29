@@ -4,7 +4,11 @@
 
 IntervieX is a modern full-stack AI interview preparation platform built with the MERN stack. It simulates realistic technical interviews using AI-generated questions, real-time voice interactions, resume-based personalization, and intelligent performance evaluation.
 
-<img width="1213" height="624" alt="pika-1780030819764-1x" src="https://github.com/user-attachments/assets/4da680da-beb6-49f1-9a23-014d7254888a" />
+Click the image:
+
+<a href="https://interviex.vercel.app/"> 
+  <img width="1213" height="624" alt="pika-1780030819764-1x" src="https://github.com/user-attachments/assets/4da680da-beb6-49f1-9a23-014d7254888a" />
+</a>
 
 ---
 
