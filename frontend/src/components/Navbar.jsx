@@ -83,8 +83,6 @@ const Navbar = () => {
                         : 'text-gray-400 hover:bg-white/5 hover:text-white'
                     }`}
                   >
-                    <Icon className="h-4 w-4" />
-
                     <span>{item.label}</span>
                   </Link>
                 );
@@ -172,7 +170,6 @@ const Navbar = () => {
                           : 'text-gray-400 hover:bg-white/5 hover:text-white'
                       }`}
                     >
-                      <Icon className="h-4 w-4" />
                       {item.label}
                     </Link>
                   );
