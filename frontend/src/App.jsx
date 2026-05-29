@@ -1,11 +1,9 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
-import { ThemeProvider } from './context/ThemeContext';
 import ProtectedRoute from './components/ProtectedRoute';
 import Navbar from './components/Navbar';
 
-// Pages
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -18,7 +16,6 @@ import About from './pages/About';
 
 function App() {
   return (
-    <ThemeProvider>
       <AuthProvider>
         <Router>
           <div className="flex flex-col min-h-screen bg-black text-gray-900 dark:text-gray-100 transition-colors duration-200">
@@ -82,7 +79,6 @@ function App() {
           </div>
         </Router>
       </AuthProvider>
-    </ThemeProvider>
   );
 }
 
