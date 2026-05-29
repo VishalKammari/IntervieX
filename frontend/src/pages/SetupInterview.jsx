@@ -121,7 +121,7 @@ const SetupInterview = () => {
                 {...register('jobTitle', {
                   required: 'Job Title is required',
                 })}
-                className={`w-full px-4 py-3 rounded-xl border bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm ${
+                className={`w-full px-4 py-3 rounded-xl border bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-0 transition-all text-sm ${
                   errors.jobTitle
                     ? 'border-red-800'
                     : 'border-zinc-800'
@@ -143,7 +143,7 @@ const SetupInterview = () => {
                 rows={4}
                 placeholder="Paste the job description here..."
                 {...register('jobDescription')}
-                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-0 transition-all text-sm"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -160,7 +160,7 @@ const SetupInterview = () => {
                     required: 'Experience is required',
                     valueAsNumber: true,
                   })}
-                  className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-0 transition-all text-sm"
                 />
               </div>
 
@@ -173,7 +173,7 @@ const SetupInterview = () => {
                   type="text"
                   placeholder="React, Node.js, MongoDB"
                   {...register('skills')}
-                  className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-0 transition-all text-sm"
                 />
               </div>
             </div>
@@ -186,7 +186,7 @@ const SetupInterview = () => {
 
               <select
                 {...register('difficultyLevel')}
-                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-0 transition-all text-sm"
               >
                 <option value="Entry">Entry Level</option>
                 <option value="Mid">Mid Level</option>
@@ -202,7 +202,7 @@ const SetupInterview = () => {
 
               <select
                 {...register('interviewType')}
-                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-0 transition-all text-sm"
               >
                 <option value="Mixed">Mixed</option>
                 <option value="Technical">Technical</option>
@@ -240,7 +240,7 @@ const SetupInterview = () => {
 
                 <select
                   {...register('resumeId')}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-0 transition-all text-sm"
                 >
                   <option value="">
                     -- Skip Resume & Continue --
