@@ -283,7 +283,7 @@ const InterviewSession = () => {
     return (
       <div className="min-h-[calc(100vh-4rem)] flex items-center justify-center bg-gray-50 dark:bg-darkBg">
         <div className="text-center space-y-4">
-          <div className="w-12 h-12 border-4 border-indigo-500 border-t-transparent rounded-full animate-spin mx-auto"></div>
+          <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin mx-auto"></div>
           <p className="text-gray-500 dark:text-gray-400 font-medium">Entering mock session room...</p>
         </div>
       </div>
@@ -321,9 +321,6 @@ const InterviewSession = () => {
 
   return (
     <div className="min-h-screen bg-black text-white px-4 py-8 relative overflow-hidden">
-    <div className="absolute top-[-10%] right-[-10%] w-72 h-72 bg-indigo-600/20 blur-3xl rounded-full"></div>
-    <div className="absolute bottom-[-10%] left-[-10%] w-72 h-72 bg-purple-600/20 blur-3xl rounded-full"></div>
-
     <div className="max-w-4xl mx-auto relative z-10">
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
         <div>
@@ -459,7 +456,7 @@ const InterviewSession = () => {
               setUserAnswerText(e.target.value)
             }
             placeholder="Your answer will appear here..."
-            className="w-full flex-1 min-h-[140px] px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm leading-relaxed resize-none"
+            className="w-full flex-1 min-h-[140px] px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm leading-relaxed resize-none"
             disabled={isTranscribing}
           />
 

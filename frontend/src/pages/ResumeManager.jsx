@@ -92,8 +92,6 @@ const ResumeManager = () => {
   }
   return (
   <div className="min-h-screen bg-black text-white px-4 py-10 relative overflow-hidden">
-    <div className="absolute top-[-10%] right-[-10%] w-[35%] h-[35%] rounded-full bg-indigo-500/10 blur-[120px] pointer-events-none"></div>
-
     <div className="max-w-4xl mx-auto">
       <div className="mb-10 text-center">
         <h1 className="dancing-script text-4xl md:text-5xl font-bold">
@@ -120,7 +118,7 @@ const ResumeManager = () => {
           </h3>
 
           <label
-            className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-black hover:bg-indigo-700 transition font-medium cursor-pointer ${
+            className={`inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-white text-black hover:bg-white transition font-medium cursor-pointer ${
               uploading ? 'opacity-50 pointer-events-none' : ''
             }`}
           >
@@ -166,7 +164,7 @@ const ResumeManager = () => {
                 className="bg-black border border-gray-800 rounded-2xl p-5 flex items-center justify-between hover:border-white/60 transition-all"
               >
                 <div className="flex items-center gap-4 min-w-0">
-                  <div className="w-12 h-12 rounded-xl bg-indigo-500/10 flex items-center justify-center text-white shrink-0">
+                  <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-white shrink-0">
                     <FileText className="w-5 h-5" />
                   </div>
 

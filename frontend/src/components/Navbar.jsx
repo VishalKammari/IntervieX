@@ -131,7 +131,8 @@ const Navbar = () => {
 
               <Link
                 to="/register"
-                className="rounded-xl bg-white px-5 py-2.5 text-sm font-medium text-black shadow-lg shadow-indigo-500/20 transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
+                className="rounded-xl bg-white px-5 py-2.5 text-sm font-medium text-black shadow-lg shadow-white
+                /20 transition-all duration-200 hover:scale-[1.03] active:scale-[0.98]"
               >
                 Get Started
               </Link>
@@ -197,7 +198,7 @@ const Navbar = () => {
 
                 <Link
                   to="/register"
-                  className="rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-4 py-3 text-center text-sm font-medium text-white"
+                  className="rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-white"
                 >
                   Get Started
                 </Link>

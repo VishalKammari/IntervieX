@@ -76,7 +76,7 @@ const InterviewReport = () => {
         </p>
         <Link
           to="/dashboard"
-          className="mt-6 inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium"
+          className="mt-6 inline-flex items-center space-x-2 px-5 py-2.5 rounded-xl bg-white hover:bg-white/50 text-white text-sm font-medium"
         >
           <ArrowLeft className="w-4 h-4" />
           <span>Return to Dashboard</span>

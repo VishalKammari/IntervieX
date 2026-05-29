@@ -79,28 +79,12 @@ const SetupInterview = () => {
 
   if (generating) {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center px-4">
-        <div className="text-center max-w-sm space-y-6">
-          <div className="relative w-20 h-20 mx-auto">
-            <div className="absolute inset-0 rounded-full border-4 border-zinc-800"></div>
-
-            <Loader2 className="w-20 h-20 text-white animate-spin absolute inset-0" />
-
-            <Sparkles className="w-8 h-8 text-zinc-300 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 animate-pulse" />
-          </div>
-
-          <div className="space-y-2">
-            <h3 className="text-2xl font-bold text-white">
-              Creating Interview
-            </h3>
-
-            <p className="text-sm text-zinc-400 leading-relaxed">
-              AI is preparing personalized mock interview questions
-              based on your role, skills, and experience.
-            </p>
-          </div>
+      <div className="min-h-screen bg-black flex flex-col items-center justify-center gap-4">
+          <Loader2 className="w-10 h-10 text-white animate-spin" />
+          <p className="text-zinc-400 text-sm font-medium tracking-wide">
+          Creating your interview...
+          </p>
         </div>
-      </div>
     );
   }
 
@@ -137,7 +121,7 @@ const SetupInterview = () => {
                 {...register('jobTitle', {
                   required: 'Job Title is required',
                 })}
-                className={`w-full px-4 py-3 rounded-xl border bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm ${
+                className={`w-full px-4 py-3 rounded-xl border bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm ${
                   errors.jobTitle
                     ? 'border-red-800'
                     : 'border-zinc-800'
@@ -159,7 +143,7 @@ const SetupInterview = () => {
                 rows={4}
                 placeholder="Paste the job description here..."
                 {...register('jobDescription')}
-                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
               />
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -176,7 +160,7 @@ const SetupInterview = () => {
                     required: 'Experience is required',
                     valueAsNumber: true,
                   })}
-                  className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
                 />
               </div>
 
@@ -189,7 +173,7 @@ const SetupInterview = () => {
                   type="text"
                   placeholder="React, Node.js, MongoDB"
                   {...register('skills')}
-                  className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                  className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white placeholder:text-zinc-600 focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
                 />
               </div>
             </div>
@@ -202,7 +186,7 @@ const SetupInterview = () => {
 
               <select
                 {...register('difficultyLevel')}
-                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
               >
                 <option value="Entry">Entry Level</option>
                 <option value="Mid">Mid Level</option>
@@ -218,7 +202,7 @@ const SetupInterview = () => {
 
               <select
                 {...register('interviewType')}
-                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                className="w-full px-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
               >
                 <option value="Mixed">Mixed</option>
                 <option value="Technical">Technical</option>
@@ -256,7 +240,7 @@ const SetupInterview = () => {
 
                 <select
                   {...register('resumeId')}
-                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-indigo-500 transition-all text-sm"
+                  className="w-full pl-10 pr-4 py-3 rounded-xl border border-zinc-800 bg-black text-white focus:outline-none focus:ring-2 focus:ring-white-500 transition-all text-sm"
                 >
                   <option value="">
                     -- Skip Resume & Continue --
