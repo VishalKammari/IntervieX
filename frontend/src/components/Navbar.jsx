@@ -194,9 +194,9 @@ const Navbar = () => {
 
                 <Link
                   to="/register"
-                  className="rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-white"
+                  className="rounded-xl bg-white px-4 py-3 text-center text-sm font-medium text-black"
                 >
-                  Get Started
+                  Sign up
                 </Link>
               </>
             )}
